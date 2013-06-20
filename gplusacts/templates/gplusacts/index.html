@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Google+ Activities</title>
+        <meta charset="utf-8" />
+        <meta name="description" content="Saved activities from a Google+ feed that was downloaded via their API." />
+        <style>
+            body {
+                font-family: verdana, sans-serif;
+                margin: auto;
+                width: 400px;
+            }
+            ul {
+                list-style-type: none;
+                margin: 0px;
+                padding: 10px 0px 0px 0px;
+            }
+            #gplus-activities { font-size: 14px; }
+                #gplus-activities > li {
+                    border: 1px rgb(200,200,200) solid;
+                    box-shadow: 2px 2px 4px rgb(100,100,100);
+                    margin: 0px 0px 10px 0px;
+                    padding: 10px;
+                }
+            .gplus-attachments { font-size: 11px; }
+                .gplus-attachments > li {
+                    margin: 0px;
+                    padding: 0px;
+                }
+                .gplus-attachments img {
+                    border: 0px;
+                    width: 100%;
+                }
+        </style>
+    </head>
+    <body>
+        <ul id="gplus-activities">{% for a in activities %}
+            <li>
+                {{ a.activity.content |safe }}
+                {% if a.attachments %}<ul class="gplus-attachments">{% for att in a.attachments %}
+                    <li>{% if att.image %}
+                        <a href="{{ att.url }}" target="_blank"><img src="{{ att.image }}" alt="{{ att.title }}" /></a>{% endif %}{% if att.title %}
+                        <br /><a href="{{ att.url }}" target="_blank">{{ att.title }}</a>{% endif %}{% if att.content %}
+                        <br />{{ att.content }}{% endif %}
+                    </li>{% endfor %}
+                </ul>{% endif %}
+            </li>{% endfor %}
+        </ul>
+    </body>
+</html>
