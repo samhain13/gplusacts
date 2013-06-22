@@ -6,6 +6,7 @@
         <meta name="description" content="Saved activities from a Google+ feed that was downloaded via their API." />
         <style>
             body {
+                color: rgb(0,0,0);
                 font-family: verdana, sans-serif;
                 margin: auto;
                 width: 400px;
@@ -31,12 +32,18 @@
                     border: 0px;
                     width: 100%;
                 }
+            .gplus-published {
+                color: rgb(100,100,100);
+                font-size: 8px;
+                margin-bottom: 15px;
+            }
         </style>
     </head>
     <body>
         <ul id="gplus-activities">{% for a in activities %}
             <li>
-                {{ a.activity.content |safe }}
+                <div class="gplus-published"><time datetime="{{ a.activity.published |date:'Y-m-d' }}">{{ a.activity.published |date:"d M Y" }}</time></div>
+                <div class="">{{ a.activity.content |safe }}</div>
                 {% if a.attachments %}<ul class="gplus-attachments">{% for att in a.attachments %}
                     <li>{% if att.image %}
                         <a href="{{ att.url }}" target="_blank"><img src="{{ att.image }}" alt="{{ att.title }}" /></a>{% endif %}{% if att.title %}

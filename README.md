@@ -12,11 +12,16 @@ url(r"^gplus/", include("gplusacts.urls"))
 
 ### Downloading an activities feed:
 (Might be good idea to put this in a Crontab.)  
-./manage.py gplusactsdl <profile id> <api key>
+./manage.py gplusactsdl [profile id] [api key]
 
 ## Why am I doing this?
 I'm learning Django and this seems like a nice project to get me going. I know that you can use the Google+ API directly on a web page and just process the JSON on the fly. However, I figured that if I did that on several sites hosted under one IP address, I might have to spend extra money on increasing the usage quota. Besides, a wise man once told me that caching never harmed anyone.
 
-## TODO
-Dunno. Maybe try to change the way the admin interfaces look? We'll see.
+## Changelog
 
+* 2013-06-22:
+    * Now, using django.shortcuts in view.py instead of the other method.
+    * Tweaked the template; added the publication date and containers for more styling options.
+
+## ToDo
+Dunno. Maybe maybe paginate the activities page or add filters? And/or try posting activities with multiple attachments and tweak the template accordingly?

@@ -1,5 +1,4 @@
-from django.http import HttpResponse
-from django.template import Context, loader
+from django.shortcuts import render
 from gplusacts.models import Activity, Attachment
 
 def index(request):
@@ -11,10 +10,8 @@ def index(request):
         for att in Attachment.objects.filter(activity=activity):
             a["attachments"].append(att)
         activities.append(a)
-    
-    template = loader.get_template("gplusacts/index.html")
-    context = Context({
+    context = {
         "activities": activities,
-    })
-    return HttpResponse(template.render(context))
+    }
+    return render(request, "gplusacts/index.html", context)
 
