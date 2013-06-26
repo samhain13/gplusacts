@@ -49,6 +49,14 @@
     </head>
     
     <body>
+        <nav>{% if back %}
+            <a href="{{ back }}">Back</a>{% else %}
+            <a class="inactive">Back</a>{% endif %}
+            | Page {{ current_page }} or {{ total_pages }} |{% if next %}
+            <a href="{{ next }}">Next</a>{% else %}
+            <a class="inactive">Next</a>{% endif %}
+        </nav>
+        
         <ul id="gplus-activities">{% for a in activities %}
             <li>
                 <div class="gplus-published"><time datetime="{{ a.activity.published |date:'Y-m-d' }}">{{ a.activity.published |date:"d M Y" }}</time></div>
@@ -63,20 +71,12 @@
             </li>{% endfor %}
         </ul>
         
-        <nav>
-            {% if has_previous %}
-            <a href="?page={{ previous_page_number }}">Back</a>
-            {% else %}
-            <a class="inactive">Back</a>
-            {% endif %}
-            
-            | Page {{ current_page }} or {{ total_pages }} |
-            
-            {% if has_next %}
-            <a href="?page={{ next_page_number }}">Next</a>
-            {% else %}
-            <a class="inactive">Next</a>
-            {% endif %}
+        <nav>{% if back %}
+            <a href="{{ back }}">Back</a>{% else %}
+            <a class="inactive">Back</a>{% endif %}
+            | Page {{ current_page }} or {{ total_pages }} |{% if next %}
+            <a href="{{ next }}">Next</a>{% else %}
+            <a class="inactive">Next</a>{% endif %}
         </nav>
     </body>
 </html>

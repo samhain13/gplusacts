@@ -1,33 +1,38 @@
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from gplusacts.models import Activity, Attachment
 
+
 def index(request):
-    # Check whether the settings prescribe a number of posts to show per page.
-    psettings = 5
-    if hasattr(settings, "GPLUSACTS_POSTS_PER_PAGE"):
-        psettings = settings.GPLUSACTS_POSTS_PER_PAGE
-    paginator = Paginator(Activity.objects.all(), psettings)
-    # Get the page number, if any.
-    page = request.GET.get("page")
-    # Paginate.
-    try:
-        ap = paginator.page(page)
-    except PageNotAnInteger:
-        ap = paginator.page(1)
-    except EmptyPage:
-        ap = paginator.page(paginator.num_pages)
+    return render(request, "gplusacts/index.html",
+                  _build_context(request, _get_paginator(1)))
+
+def page(request, pagenum):
+    if pagenum == "1":
+        return redirect(index)
+    return render(request, "gplusacts/index.html",
+                  _build_context(request, _get_paginator(int(pagenum))))
+
+def _build_context(request, ap):
     # Build our context.
     context = {
         "activities": [],
         "current_page": ap.number,
         "total_pages": ap.paginator.num_pages,
-        "has_previous": ap.has_previous,
-        "has_next": ap.has_next,
-        "previous_page_number": ap.previous_page_number,
-        "next_page_number": ap.next_page_number,
+        "back": None,
+        "next": None,
     }
+    # We'll just create the back and next links here instead of on
+    # the template because we have things that we have to decide on.
+    path = [x for x in request.get_full_path().split("/")
+            if x != "page" and x.isalpha()]
+    path.insert(0, "")   # For making an absolute URI later.
+    path.append("page")  # We know that the second-to-last component is "page".
+    if ap.has_previous():
+        context["back"] = "/".join(path + [repr(ap.previous_page_number())])
+    if ap.has_next():
+        context["next"] = "/".join(path + [repr(ap.next_page_number())])
     # Populate our context's activities list with Google+ activities;
     # including their attachments, if any.
     for activity in ap:
@@ -37,5 +42,20 @@ def index(request):
         for att in Attachment.objects.filter(activity=activity):
             a["attachments"].append(att)
         context["activities"].append(a)
-    return render(request, "gplusacts/index.html", context)
+    return context
+
+def _get_paginator(page):
+    # Check whether the settings prescribe a number of posts to show per page.
+    psettings = 5
+    if hasattr(settings, "GPLUSACTS_POSTS_PER_PAGE"):
+        psettings = settings.GPLUSACTS_POSTS_PER_PAGE
+    paginator = Paginator(Activity.objects.all(), psettings)
+    # Paginate.
+    try:
+        ap = paginator.page(page)
+    except PageNotAnInteger:
+        ap = paginator.page(1)
+    except EmptyPage:
+        ap = paginator.page(paginator.num_pages)
+    return ap
 
