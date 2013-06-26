@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Google+ Activities</title>
+        <title>{{ acts_title }}</title>
         <meta charset="utf-8" />
-        <meta name="description" content="Saved activities from a Google+ feed that was downloaded via their API." />
+        <meta name="description" content="A Django application that downloads activites by a Google+ account and caches them in a local database. Get the source from GitHub." />
         <style>
             body {
                 color: rgb(0,0,0);
                 font-family: verdana, sans-serif;
                 margin: auto;
                 width: 400px;
+            }
+            h1 {
+                font-size: 20px;
+                font-weight: normal;
+                margin: 0px;
+                padding: 20px 0px;
+                text-align: center;
             }
             ul {
                 list-style-type: none;
@@ -45,10 +52,21 @@
                 nav a.inactive { color: rgb(200,200,200); }
                 nav a:first-child { float: left; }
                 nav a:last-child { float: right; }
+            p {
+                font-size: 11px;
+                font-weight: bold;
+                margin: 0px;
+                padding: 10px 0px 30px 0px;
+                text-align: center;
+            }
         </style>
     </head>
     
     <body>
+        <header>
+            <h1>{{ acts_title }}</h1>
+            <p>A Django application that downloads activites by a Google+ account and caches them in a local database.</p>
+        </header>
         <nav>{% if back %}
             <a href="{{ back }}">Back</a>{% else %}
             <a class="inactive">Back</a>{% endif %}
@@ -78,5 +96,7 @@
             <a href="{{ next }}">Next</a>{% else %}
             <a class="inactive">Next</a>{% endif %}
         </nav>
+        
+        <p><a href="https://github.com/samhain13/gplusacts" target="_blank">Download GPlusActs from GitHub</a></p>
     </body>
 </html>

@@ -18,11 +18,13 @@ def _build_context(request, ap):
     # Build our context.
     context = {
         "activities": [],
+        "acts_title": getattr(settings, "GPLUSACTS_TITLE", "Google+ Activities"),
         "current_page": ap.number,
         "total_pages": ap.paginator.num_pages,
         "back": None,
         "next": None,
     }
+    # See if we have a custom title.
     # We'll just create the back and next links here instead of on
     # the template because we have things that we have to decide on.
     path = [x for x in request.get_full_path().split("/")

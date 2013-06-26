@@ -1,6 +1,7 @@
 # Google+ Activity Saver
 
-A Django application that saves Google+ activities in to a local database.
+A Django application that downloads activites by a Google+ account and caches them in a local database.  
+Demo: [http://www.zurcaweb.net](http://www.zurcaweb.net)
 
 ## Usage
 ### Installation:
@@ -11,7 +12,8 @@ url(r"^gplus/", include("gplusacts.urls"))
 4. Run “./manage.py syncdb” to create the database.
 
 Optional settings (in [yourproject]/settings.py:  
-GPLUSACTS\_POSTS\_PER\_PAGE = int — posts per page (default is 5)
+GPLUSACTS\_POSTS\_PER\_PAGE = int — posts per page (default is 5)  
+GPLUSACTS\_TITLE = str — page title 
 
 ### Downloading an activities feed:
 (Might be good idea to put this in a Crontab.)  
