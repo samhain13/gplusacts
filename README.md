@@ -10,6 +10,9 @@ A Django application that saves Google+ activities in to a local database.
 url(r"^gplus/", include("gplusacts.urls"))
 4. Run “./manage.py syncdb” to create the database.
 
+Optional settings (in [yourproject]/settings.py:  
+GPLUSACTS\_POSTS\_PER\_PAGE = int — posts per page (default is 5)
+
 ### Downloading an activities feed:
 (Might be good idea to put this in a Crontab.)  
 ./manage.py gplusactsdl [profile id] [api key]
@@ -19,9 +22,12 @@ I'm learning Django and this seems like a nice project to get me going. I know t
 
 ## Changelog
 
+* 2013-06-26:
+    * Paginated posts.
+
 * 2013-06-22:
     * Now, using django.shortcuts in view.py instead of the other method.
     * Tweaked the template; added the publication date and containers for more styling options.
 
 ## ToDo
-Dunno. Maybe maybe paginate the activities page or add filters? And/or try posting activities with multiple attachments and tweak the template accordingly?
+Dunno. Add filters for viewing by date?
