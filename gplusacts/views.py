@@ -46,9 +46,7 @@ def _build_context(request, ap):
 
 def _get_paginator(page):
     # Check whether the settings prescribe a number of posts to show per page.
-    psettings = 5
-    if hasattr(settings, "GPLUSACTS_POSTS_PER_PAGE"):
-        psettings = settings.GPLUSACTS_POSTS_PER_PAGE
+    psettings = getattr(settings, "GPLUSACTS_POSTS_PER_PAGE", 5)
     paginator = Paginator(Activity.objects.all().order_by("-published"), psettings)
     # Paginate.
     try:
