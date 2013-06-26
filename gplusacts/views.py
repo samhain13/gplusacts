@@ -49,7 +49,7 @@ def _get_paginator(page):
     psettings = 5
     if hasattr(settings, "GPLUSACTS_POSTS_PER_PAGE"):
         psettings = settings.GPLUSACTS_POSTS_PER_PAGE
-    paginator = Paginator(Activity.objects.all(), psettings)
+    paginator = Paginator(Activity.objects.all().order_by("-published"), psettings)
     # Paginate.
     try:
         ap = paginator.page(page)
