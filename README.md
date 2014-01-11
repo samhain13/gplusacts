@@ -1,7 +1,7 @@
 # Google+ Activity Saver
 
 A Django application that downloads activites by a Google+ account and caches them in a local database.  
-Demo: [http://www.zurcaweb.net](http://www.zurcaweb.net)
+Demo: [http://betamini.abcruz.com](http://betamini.abcruz.com)
 
 ## Usage
 ### Installation:
