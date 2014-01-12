@@ -3,7 +3,7 @@
     <head>
         <title>{{ acts_title }}</title>
         <meta charset="utf-8" />
-        <meta name="description" content="A Django application that downloads activites by a Google+ account and caches them in a local database. Get the source from GitHub." />
+        <meta name="description" content="{{ acts_description }}" />
         <style>
             body {
                 color: rgb(0,0,0);
@@ -65,7 +65,7 @@
     <body>
         <header>
             <h1>{{ acts_title }}</h1>
-            <p>A Django application that downloads activites by a Google+ account and caches them in a local database.</p>
+            <p>{{ acts_description }}</p>
         </header>
         <nav>{% if back %}
             <a href="{{ back }}">Back</a>{% else %}
@@ -75,10 +75,12 @@
             <a class="inactive">Next</a>{% endif %}
         </nav>
         
-        <ul id="gplus-activities">{% for a in activities %}
+        <ul id="gplus-activities">
+            {% if activities %}
+            {% for a in activities %}
             <li>
                 <div class="gplus-published"><time datetime="{{ a.activity.published |date:'Y-m-d' }}">{{ a.activity.published |date:"d M Y" }}</time></div>
-                <div class="">{{ a.activity.content |safe }}</div>
+                <div class="gplus-content">{{ a.activity.content |safe }}</div>
                 {% if a.attachments %}<ul class="gplus-attachments">{% for att in a.attachments %}
                     <li>{% if att.image %}
                         <a href="{{ att.url }}" target="_blank"><img src="{{ att.image }}" alt="{{ att.title }}" /></a>{% endif %}{% if att.title %}
@@ -86,7 +88,15 @@
                         <br />{{ att.content }}{% endif %}
                     </li>{% endfor %}
                 </ul>{% endif %}
-            </li>{% endfor %}
+            </li>
+            {% endfor %}
+            {% else %}
+            <li>
+                It looks like you have not fetched any Google+ activity. Please run:<br /><br />
+                ./manage.py gplusactsdl [profile id] [api key]<br /><br />
+                Please visit <a href="https://developers.google.com/+/api/" target="_blank">the Google+ reference page</a> to find out how to acquire profile ids and api keys.
+            </li>
+            {% endif %}
         </ul>
         
         <nav>{% if back %}

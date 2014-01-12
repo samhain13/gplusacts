@@ -5,7 +5,7 @@ from gplusacts.models import Activity, Attachment
 
 
 def index(request):
-    return render(request, "gplusacts/index.html",
+    return render(request, "index.html",
                   _build_context(request, _get_paginator(1)))
 
 def page(request, pagenum):
@@ -18,7 +18,10 @@ def _build_context(request, ap):
     # Build our context.
     context = {
         "activities": [],
-        "acts_title": getattr(settings, "GPLUSACTS_TITLE", "Google+ Activities"),
+        "acts_title": getattr(settings,
+            "GPLUSACTS_TITLE", "My Google+ Activities"),
+        "acts_description": getattr(settings,
+            "GPLUSACTS_DESC", "My Google+ activities..."),
         "current_page": ap.number,
         "total_pages": ap.paginator.num_pages,
         "back": None,
