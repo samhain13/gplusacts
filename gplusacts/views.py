@@ -11,7 +11,7 @@ def index(request):
 def page(request, pagenum):
     if pagenum == "1":
         return redirect(index)
-    return render(request, "gplusacts/index.html",
+    return render(request, "index.html",
                   _build_context(request, _get_paginator(int(pagenum))))
 
 def _build_context(request, ap):
