@@ -55,7 +55,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = "%s.urls" % INSTANCE_NAME
 WSGI_APPLICATION = "%s.wsgi.application" % INSTANCE_NAME
 TEMPLATE_DIRS = (
-    os.path.join(PROJECT_PATH, "templates")
+    os.path.join(PROJECT_PATH, "templates"),
 )
 INSTALLED_APPS = (
     'django.contrib.auth',
