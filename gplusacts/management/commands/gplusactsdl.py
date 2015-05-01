@@ -25,11 +25,12 @@ class Command(BaseCommand):
     args = ""
     help = help_text
     
+    def add_arguments(self, parser):
+        parser.add_argument("command_args", nargs=2, type=str)
+    
     def handle(self, *args, **kargs):
-        # We want two arguments.
-        if len(args) != 2:
-            raise CommandError("must have 2 arguments, see help for details.")
-        activities = self._get_json(args[0], args[1])
+        activities = self._get_json(kargs["command_args"][0],
+            kargs["command_args"][1])
         # We want a dict.
         if type(activities) != dict:
             raise TypeError("server returned something that wasn't JSON.")
